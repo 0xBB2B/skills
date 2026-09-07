@@ -4,7 +4,7 @@ export const meta = {
   phases: [
     { title: 'Red', detail: 'test-engineer 只读 spec 写失败测试' },
     { title: 'Green', detail: 'impl-engineer 只看测试写最小实现' },
-    { title: 'Gate', detail: '重跑本 plan 范围测试 + 依赖守卫 + 简洁性审视' },
+    { title: 'Gate', detail: 'gate-keeper 重跑本 plan 范围测试 + 依赖守卫 + 简洁性审视' },
     { title: 'Review', detail: 'spec-reviewer 对照 spec 合规审查并逐条归因' },
   ],
 }
@@ -86,10 +86,8 @@ function greenPrompt(p, testFiles, feedback) {
 }
 
 function gatePrompt(p, out) {
-  return `${site}\n\n你是执行守门员，只读不改。\n\n` +
-    `1. 运行 \`${p.testScope}\`，如实返回 testsPass；失败时 testOutput 截取失败部分。\n` +
-    `2. 依赖守卫：\`git diff\` 依赖文件（go.mod / package.json / Cargo.toml / pyproject.toml / requirements*.txt 等）中新增的第三方库，与允许清单比对，清单外的每一项写进 depViolations。允许清单：\n${p.deps}\n` +
-    `3. 简洁性审视：读实现文件 ${out.implFiles.join(', ')}，对照函数清单找出 plan 未要求的抽象 / 防御 / 功能 / 参数化 / helper，每项写 file:line + 为何多余进 overDesign。只报确凿的，不报风格偏好。函数清单：\n${p.functions}`
+  return `${site}\n\n## 测试范围命令\n\`${p.testScope}\`\n\n## 允许新增的第三方依赖\n${p.deps}\n\n## 实现文件\n${out.implFiles.map(f => `- ${f}`).join('\n')}\n\n## 函数清单\n${p.functions}\n\n` +
+    `## 任务\n只读不改。1. 运行测试范围命令，如实返回 testsPass，失败时 testOutput 截取失败部分。2. \`git diff\` 依赖文件中新增的第三方库与允许清单比对，清单外的每一项写进 depViolations。3. 对照函数清单读实现文件，plan 未要求的抽象 / 防御 / 功能 / 参数化 / helper 每项写 file:line + 为何多余进 overDesign，只报确凿的。`
 }
 
 function reviewPrompt(p, out, prev) {
@@ -106,7 +104,7 @@ async function greenGate(p, out, feedback) {
   out.implFiles = union(out.implFiles, green.implFiles)
   if (green.extraDeps.length) return { fatal: true, issues: `需要 plan 清单外的第三方库：${green.extraDeps.join(', ')}` }
   const gate = await agent(gatePrompt(p, out),
-    { agentType: 'general-purpose', label: `gate:${p.name}`, phase: 'Gate', schema: GATE, effort: 'low' })
+    { agentType: 'bb-spec-workflow:gate-keeper', label: `gate:${p.name}`, phase: 'Gate', schema: GATE, effort: 'low' })
   if (!gate) return { fatal: true, issues: 'gate 未返回结果' }
   const issues = [
     ...(gate.testsPass ? [] : [`测试未全部通过：\n${gate.testOutput}`]),
