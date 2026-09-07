@@ -19,7 +19,7 @@ argument-hint: <问题或优化诉求描述>
 5. **修正闭环**：修正后必须验证——全量测试通过 + spec 合规 + 索引同步
 6. **最小影响**：只改必须改的层，不借修正之名扩展功能或重构（额外需求走 `/spec` → `/plan`）
 7. **已完成 plan 禁止回改**：PROGRESS.md 全部完成的 plan 是带日期的历史审计快照，回改即篡改记录（目录日期与内容脱节、"完成的是哪个版本"不可追溯）；仅进行中（PROGRESS.md 未全完成）的 plan 允许原地修正以保证断点续接。修复本身由本流程直接驱动，git commit 即修订记录
-8. **TDD 修复走 exec 的 Workflow 流水线**：涉及代码修改时必须调用 Workflow 工具运行 exec 的 `exec-group` 脚本（Red→Green→Gate→Review，agentType 依次为 `bb-spec-workflow:test-engineer` / `bb-spec-workflow:impl-engineer` / `general-purpose` / `bb-spec-workflow:spec-reviewer`），把本次修复组装成单个 plan 项传入；**禁止主 agent 自己写测试、写实现、做 spec 合规检查，也禁止绕过 Workflow 手工派 subagent**；环境无 Workflow 工具 → 中止并提示升级 Claude Code（≥ 2.1.154）。唯一例外是「轻量修复判断」（见步骤 3）通过且用户同意后允许主 agent 直接 TDD 修复
+8. **TDD 修复走 exec 的 Workflow 流水线**：涉及代码修改时必须调用 Workflow 工具运行 exec 的 `exec-group` 脚本（Red→Green→Gate→Review，agentType 依次为 `bb-spec-workflow:test-engineer` / `bb-spec-workflow:impl-engineer` / `bb-spec-workflow:gate-keeper` / `bb-spec-workflow:spec-reviewer`），把本次修复组装成单个 plan 项传入；**禁止主 agent 自己写测试、写实现、做 spec 合规检查，也禁止绕过 Workflow 手工派 subagent**；环境无 Workflow 工具 → 中止并提示升级 Claude Code（≥ 2.1.154）。唯一例外是「轻量修复判断」（见步骤 3）通过且用户同意后允许主 agent 直接 TDD 修复
 9. **Agent 隔离同 exec**：Test 不看实现，Impl 不看 spec，Gate 与 Review 只读不写；Workflow 内的 agent 不写进度、不操作 git，commit 由主 agent 在步骤 4 完成
 10. **输出中文**
 

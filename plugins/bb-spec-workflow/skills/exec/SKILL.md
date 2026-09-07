@@ -31,7 +31,7 @@ argument-hint: <YYYY-MM-DD.主题>[/<plan名>]
 |---|---|---|
 | Red | `bb-spec-workflow:test-engineer` | 测试工程师：只读 spec 写失败测试 |
 | Green | `bb-spec-workflow:impl-engineer` | 实现工程师：只看测试写最小实现 |
-| Gate | `general-purpose`（effort low） | 守门员：重跑本 plan 范围测试、依赖守卫、简洁性审视，只读 |
+| Gate | `bb-spec-workflow:gate-keeper`（effort low） | 守门员：重跑本 plan 范围测试、依赖守卫、简洁性审视，只读 |
 | Review | `bb-spec-workflow:spec-reviewer` | 合规审查者：对照 spec 检查产出并逐条归因，只读 |
 
 **信息隔离矩阵**：

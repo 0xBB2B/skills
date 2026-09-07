@@ -143,7 +143,7 @@ Optional upstream: `/prd` (PM / requester brainstorms a PRD; shipped separately 
 
 **Ships with**
 
-- **8 orchestration subagents** driven by the stages above: `test-engineer` / `impl-engineer` / `spec-reviewer` / `webview-test-runner` / `review-defect` / `review-design` / `review-codex` / `pre-reviewer`
+- **9 orchestration subagents** driven by the stages above: `test-engineer` / `impl-engineer` / `gate-keeper` / `spec-reviewer` / `webview-test-runner` / `review-defect` / `review-design` / `review-codex` / `pre-reviewer`
 - **4 passive hooks** (automatic): block npm/yarn, block main commit, dependency version self-check, Stop four-point self-check
 
 ---
