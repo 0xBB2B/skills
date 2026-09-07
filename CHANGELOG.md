@@ -1,5 +1,12 @@
 # Changelog
 
+## [12.6.0](https://github.com/0xBB2B/bb-spec/compare/v12.5.0...v12.6.0) (2026-09-07)
+
+
+### Features
+
+* **exec,revise:** Gate 阶段派独立 gate-keeper agent（opus），流水线四阶段均有 agent 文档 ([#257](https://github.com/0xBB2B/bb-spec/issues/257)) ([5162ff5](https://github.com/0xBB2B/bb-spec/commit/5162ff535f0fd6c0c077fb193191ed751923d919))
+
 ## [12.5.0](https://github.com/0xBB2B/bb-spec/compare/v12.4.0...v12.5.0) (2026-09-02)
 
 
