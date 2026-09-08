@@ -104,8 +104,7 @@
   - *Test* Agent 只讀 spec 規則寫失敗測試(Red)
   - *Impl* Agent **看不到 spec**,只看測試 + 函式清單寫實作(Green),無法「照著意圖作弊」;新增第三方函式庫受 plan 已核可相依清單約束
   - *Review* Agent 對照 spec 檢查並過一遍強健性/安全視角,唯讀不寫
-  - 每個執行組一次 Workflow 運行,組內 plan 並發、各自串行走 Red→Green→Gate→Review,重試上限與阻塞判定由腳本確定性控制
-  - 每組結束寫 `PROGRESS.md`,token 耗盡也能**無損續接**
+  - 每步進度寫 `PROGRESS.md`,token 耗盡也能**無損續接**
 
 - **`/test-webview`** — 前端 / 網頁專案的**互動驗收**。
   - Docker 整棧拉起(首次確認後記住,跑完 `down -v` 清理),瀏覽器 MCP 驅動真實瀏覽器
@@ -142,7 +141,7 @@
 
 **附帶產物**
 
-- **9 個編排 subagent**(被上述環節驅動):`test-engineer` / `impl-engineer` / `gate-keeper` / `spec-reviewer` / `webview-test-runner` / `review-defect` / `review-design` / `review-codex` / `pre-reviewer`
+- **8 個編排 subagent**(被上述環節驅動):`test-engineer` / `impl-engineer` / `spec-reviewer` / `webview-test-runner` / `review-defect` / `review-design` / `review-codex` / `pre-reviewer`
 - **4 個被動 hook**(自動生效):攔截 npm/yarn、攔截 main commit、相依版本自檢、Stop 四項自檢
 
 ---

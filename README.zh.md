@@ -104,8 +104,7 @@
   - *Test* Agent 只读 spec 规则写失败测试(Red)
   - *Impl* Agent **看不到 spec**,只看测试 + 函数清单写实现(Green),无法「照着意图作弊」;新增第三方库受 plan 已批依赖清单约束
   - *Review* Agent 对照 spec 检查并过一遍鲁棒性/安全视角,只读不写
-  - 每个执行组一次 Workflow 运行,组内 plan 并发、各自串行走 Red→Green→Gate→Review,重试上限与阻塞判定由脚本确定性控制
-  - 每组结束写 `PROGRESS.md`,token 耗尽也能**无损续接**
+  - 每步进度写 `PROGRESS.md`,token 耗尽也能**无损续接**
 
 - **`/test-webview`** — 前端 / 网页项目的**交互验收**。
   - Docker 整栈拉起(首次确认后记住,跑完 `down -v` 清理),浏览器 MCP 驱动真实浏览器
@@ -142,7 +141,7 @@
 
 **附带产物**
 
-- **9 个编排 subagent**(被上述环节驱动):`test-engineer` / `impl-engineer` / `gate-keeper` / `spec-reviewer` / `webview-test-runner` / `review-defect` / `review-design` / `review-codex` / `pre-reviewer`
+- **8 个编排 subagent**(被上述环节驱动):`test-engineer` / `impl-engineer` / `spec-reviewer` / `webview-test-runner` / `review-defect` / `review-design` / `review-codex` / `pre-reviewer`
 - **4 个被动 hook**(自动生效):拦截 npm/yarn、拦截 main commit、依赖版本自检、Stop 四项自检
 
 ---

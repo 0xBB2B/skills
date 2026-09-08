@@ -105,8 +105,7 @@
   - *Test* 에이전트는 spec 규칙만 읽고 실패 테스트를 작성(Red)
   - *Impl* 에이전트는 **spec을 보지 않음**, 테스트 + 함수 목록만 보고 구현 작성(Green), "의도에 맞춰 부정"할 수 없음; 신규 제3자 라이브러리는 plan에서 승인된 의존 목록에 제한
   - *Review* 에이전트는 spec과 대조하고 견고성/보안 관점으로도 점검, 읽기 전용
-  - 실행 그룹마다 Workflow 1회 실행, 그룹 내 plan은 병렬로 각자 Red→Green→Gate→Review를 직렬 진행, 재시도 상한과 차단 판정은 스크립트가 결정적으로 제어
-  - 각 그룹 종료 시 진행을 `PROGRESS.md`에 기록, token 소진 시에도 **무손실 재개** 가능
+  - 각 단계의 진행을 `PROGRESS.md`에 기록, token 소진 시에도 **무손실 재개** 가능
 
 - **`/test-webview`** — 프론트엔드 / 웹 프로젝트의 **상호작용 인수**.
   - Docker 전체 스택 기동(최초 확인 후 기억, 완료 시 `down -v`로 정리), 브라우저 MCP로 실제 브라우저 구동
@@ -143,7 +142,7 @@
 
 **동봉되는 것**
 
-- **9개 오케스트레이션 subagent**(위 단계에 의해 구동): `test-engineer` / `impl-engineer` / `gate-keeper` / `spec-reviewer` / `webview-test-runner` / `review-defect` / `review-design` / `review-codex` / `pre-reviewer`
+- **8개 오케스트레이션 subagent**(위 단계에 의해 구동): `test-engineer` / `impl-engineer` / `spec-reviewer` / `webview-test-runner` / `review-defect` / `review-design` / `review-codex` / `pre-reviewer`
 - **4개 수동 hook**(자동 발동): npm/yarn 차단, main 커밋 차단, 의존성 버전 자가 점검, Stop 시 4항목 자가 점검
 
 ---
