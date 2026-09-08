@@ -1,5 +1,12 @@
 # Changelog
 
+## [12.6.1](https://github.com/0xBB2B/bb-spec/compare/v12.6.0...v12.6.1) (2026-09-08)
+
+
+### Bug Fixes
+
+* **exec,revise:** 回退 Workflow 流水线，恢复主 agent 手工派 Test→Impl→Review 三阶段 ([#259](https://github.com/0xBB2B/bb-spec/issues/259)) ([df34211](https://github.com/0xBB2B/bb-spec/commit/df3421159749aab88f9caf8d6dd7dd8f454f5701))
+
 ## [12.6.0](https://github.com/0xBB2B/bb-spec/compare/v12.5.0...v12.6.0) (2026-09-07)
 
 
